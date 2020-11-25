@@ -1,11 +1,13 @@
-const { app, BrowserWindow } = require('electron')
+import { app, BrowserWindow } from 'electron'
+
 
 const createWindow = () => {
   const window = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: false,
+      contextIsolation: true
     }
   })
 
@@ -13,7 +15,7 @@ const createWindow = () => {
   window.webContents.openDevTools()
 
   // hide the default menu bar that comes with the browser window
-  window.setMenuBarVisibility(null)
+  window.setMenuBarVisibility(true)
 
   window.loadFile(`./ts-out/renderer/index.html`);
 }

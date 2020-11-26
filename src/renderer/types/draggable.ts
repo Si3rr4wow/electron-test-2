@@ -14,9 +14,17 @@ export interface IDraggables {
   [key: string]: IDraggable
 }
 
+export type TTarget = string | null
+
 export interface IDraggableAreaContext {
   mouse: MousePosition | null,
   draggables: IDraggables,
+  target: TTarget,
   registerDraggable: (draggable: IDraggable) => void,
-  setDraggable: (draggable: IDraggable) => void
+  onDraggableChange: (draggable: IDraggable) => void,
+  onTargetChange: (nextTarget: TTarget) => void,
+  boundingRect: {
+    width: number,
+    height: number
+  }
 }

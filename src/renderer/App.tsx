@@ -2,20 +2,43 @@ import React from 'react'
 
 import DraggableArea from './components/DraggableArea'
 import Draggable from './components/Draggable'
+import Droppable from './components/Droppable'
 
 const App: React.FC<{}> = () => {
   return (
     <div style={{ display: 'grid', height: '100%' }}>
       <div className="m-auto" style={{ height: '90%', width: '90%' }}>
       <DraggableArea>
-        <Draggable id={'dra_1'} initialPosition={{ x:100, y: 200 }}>
-          <div style={{ display: 'grid', height: '100%' }}>
+        {
+          (new Array(36).fill(0)).map((_, id) => {
+            return (
+              <Droppable key={`dro_${id}`} id={`dro_${id}`} initialPosition={{ x: (id % 6) * 100, y: Math.floor(id / 6) * 100 }}>
+                <div style={{
+                  display: 'grid',
+                  height: '100px',
+                  width: '100px',
+                  background: '#82c780'
+                }}>
+                  <div className="m-auto">
+                    dro_{id}
+                  </div>
+                </div>
+              </Droppable>
+            )
+          })
+        }
+        <Draggable id={'dra_1'} initialPosition={{ x: 900, y: 300 }}>
+          <div style={{
+            display: 'grid',
+            height: '100px',
+            width: '100px',
+            background: '#8082c7'
+          }}>
             <div className="m-auto">
               dra_1
             </div>
           </div>
         </Draggable>
-
       </DraggableArea>
       </div>
     </div>

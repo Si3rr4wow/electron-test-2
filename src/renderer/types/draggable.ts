@@ -19,10 +19,12 @@ export type TTarget = string | null
 export interface IDraggableAreaContext {
   mouse: MousePosition | null,
   draggables: IDraggables,
-  target: TTarget,
+  dragTarget: TTarget,
+  dropTarget: TTarget,
   registerDraggable: (draggable: IDraggable) => void,
   onDraggableChange: (draggable: IDraggable) => void,
-  onTargetChange: (nextTarget: TTarget) => void,
+  onDragTargetChange: (nextTarget: TTarget) => void,
+  onDropTargetChange: (nextTarget: TTarget) => void,
   boundingRect: {
     width: number,
     height: number

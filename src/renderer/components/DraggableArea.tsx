@@ -5,10 +5,12 @@ import { IDraggable, IDraggables, IDraggableAreaContext, TTarget } from '../type
 const initialDraggableAreaContext: IDraggableAreaContext = {
   mouse: null,
   draggables: {},
-  target: null,
+  dragTarget: null,
+  dropTarget: null,
   registerDraggable: () => {},
   onDraggableChange: () => {},
-  onTargetChange: () => {},
+  onDragTargetChange: () => {},
+  onDropTargetChange: () => {},
   boundingRect: {
     width: 0,
     height: 0
@@ -19,7 +21,8 @@ export const DraggableAreaContext = createContext(initialDraggableAreaContext)
 
 const DraggableArea: React.FC<{}> = ({ children }) => {
   const [draggables, setDraggables] = useState<IDraggables>({})
-  const [target, setTarget] = useState<TTarget>(null)
+  const [dragTarget, setDragTarget] = useState<TTarget>(null)
+  const [dropTarget, setDropTarget] = useState<TTarget>(null)
   const ref = React.useRef<HTMLDivElement>(null)
   const mouse: MousePosition = useMouse(ref, {
     fps: 60
@@ -42,16 +45,22 @@ const DraggableArea: React.FC<{}> = ({ children }) => {
     }))
   }
 
-  const handleTargetChange = (nextTarget: TTarget): void => {
-    setTarget(nextTarget)
+  const handleDragTargetChange = (nextDragTarget: TTarget): void => {
+    setDragTarget(nextDragTarget)
+  }
+
+  const handleDropTargetChange = (nextDropTarget: TTarget): void => {
+    setDropTarget(nextDropTarget)
   }
 
   const handleMouseUp = () => {
-    setTarget(null)
+    setDragTarget(null)
+    setDropTarget(null)
   }
 
   const handleMouseLeave = () => {
-    setTarget(null)
+    setDragTarget(null)
+    setDropTarget(null)
   }
 
   const boundingRect = (() => {
@@ -66,10 +75,12 @@ const DraggableArea: React.FC<{}> = ({ children }) => {
   const draggableAreaContextValue: IDraggableAreaContext = {
     mouse,
     draggables,
-    target,
+    dragTarget,
+    dropTarget,
     registerDraggable,
     onDraggableChange: handleDraggableChange,
-    onTargetChange: handleTargetChange,
+    onDragTargetChange: handleDragTargetChange,
+    onDropTargetChange: handleDropTargetChange,
     boundingRect
   }
 

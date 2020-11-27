@@ -91,7 +91,7 @@ const Draggable: React.FC<{ id: string, initialPosition: ICoordinate, disabled?:
         top: 0,
         left:0,
         zIndex: isDragTarget ? 1 : 0,
-        opacity: isDragTarget ? 0.1 : 1,
+        opacity: isDragTarget ? 0.8 : 1,
         boxShadow: isDragTarget ? '0px 4px 9px -3px' : '0px 0px 0px 0px',
         userSelect: 'none',
         transform: `translate(${y}px, ${x}px)`,

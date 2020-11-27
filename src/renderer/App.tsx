@@ -9,11 +9,10 @@ const App: React.FC<{}> = () => {
     <div style={{ display: 'grid', height: '100%' }}>
       <div className="m-auto" style={{ height: '90%', width: '90%' }}>
       <DraggableArea>
-        <div style={{ display: 'grid', gridTemplateColumns: '101px 101px 101px 101px 101px 101px', margin: '100px' }}>
           {
             (new Array(36).fill(0)).map((_, id) => {
               return (
-                <Droppable key={`dro_${id}`} id={`dro_${id}`} initialPosition={{ x: (id % 6) * 100 + 4 * (id % 6), y: Math.floor(id / 6) * 100 + 4 * (Math.floor(id / 6)) }}>
+                <Droppable key={`dro_${id}`} id={`dro_${id}`} initialPosition={{ x: 200 + (id % 6) * 100 + 4 * (id % 6), y: 150 + Math.floor(id / 6) * 100 + 4 * (Math.floor(id / 6)) }}>
                   <div style={{
                     display: 'grid',
                     height: '100px',
@@ -28,9 +27,6 @@ const App: React.FC<{}> = () => {
               )
             })
           }
-        </div>
-
-
           <Draggable id={'dra_1'} initialPosition={{ x: 0, y: 0 }}>
             <div style={{
               display: 'grid',

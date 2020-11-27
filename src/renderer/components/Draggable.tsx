@@ -74,7 +74,12 @@ const Draggable: React.FC<{ id: string, initialPosition: ICoordinate, disabled?:
     draggableContext.onDragTargetChange(null)
   }
 
-
+  const { x, y } = (() => {
+    return {
+      x: typeof draggable?.position?.y === 'number' ? draggable?.position?.y : initialPosition.y || 0,
+      y: typeof draggable?.position?.x === 'number' ? draggable?.position?.x : initialPosition.x || 0
+    }
+  })()
 
   return (
     <div
@@ -83,12 +88,13 @@ const Draggable: React.FC<{ id: string, initialPosition: ICoordinate, disabled?:
       ref={ref}
       style={{
         position: 'absolute',
+        top: 0,
+        left:0,
         zIndex: isDragTarget ? 1 : 0,
-        opacity: isDragTarget ? 0.8 : 1,
+        opacity: isDragTarget ? 0.1 : 1,
         boxShadow: isDragTarget ? '0px 4px 9px -3px' : '0px 0px 0px 0px',
         userSelect: 'none',
-        top: typeof draggable?.position?.y === 'number' ? draggable?.position?.y : initialPosition.y || 0,
-        left: typeof draggable?.position?.x === 'number' ? draggable?.position?.x : initialPosition.x || 0,
+        transform: `translate(${y}px, ${x}px)`,
         transition: 'opacity 0.2s, box-shadow 0.2s'
       }}>
       {children}

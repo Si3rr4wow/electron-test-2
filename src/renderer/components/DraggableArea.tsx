@@ -8,7 +8,11 @@ const initialDraggableAreaContext: IDraggableAreaContext = {
   target: null,
   registerDraggable: () => {},
   onDraggableChange: () => {},
-  onTargetChange: () => {}
+  onTargetChange: () => {},
+  boundingRect: {
+    width: 0,
+    height: 0
+  }
 }
 
 export const DraggableAreaContext = createContext(initialDraggableAreaContext)
@@ -16,7 +20,7 @@ export const DraggableAreaContext = createContext(initialDraggableAreaContext)
 const DraggableArea: React.FC<{}> = ({ children }) => {
   const [draggables, setDraggables] = useState<IDraggables>({})
   const [target, setTarget] = useState<TTarget>(null)
-  const ref = React.useRef(null)
+  const ref = React.useRef<HTMLDivElement>(null)
   const mouse: MousePosition = useMouse(ref, {
     fps: 60
   })
@@ -46,6 +50,19 @@ const DraggableArea: React.FC<{}> = ({ children }) => {
     setTarget(null)
   }
 
+  const handleMouseLeave = () => {
+    setTarget(null)
+  }
+
+  const boundingRect = (() => {
+    const height = ref.current?.getBoundingClientRect?.()?.height || 0
+    const width = ref.current?.getBoundingClientRect?.()?.width || 0
+    return {
+      height,
+      width
+    }
+  })()
+
   const draggableAreaContextValue: IDraggableAreaContext = {
     mouse,
     draggables,
@@ -53,7 +70,7 @@ const DraggableArea: React.FC<{}> = ({ children }) => {
     registerDraggable,
     onDraggableChange: handleDraggableChange,
     onTargetChange: handleTargetChange,
-    boundingRect: ref.current?.getBoundingClientRect?.()
+    boundingRect
   }
 
   return (
@@ -61,6 +78,7 @@ const DraggableArea: React.FC<{}> = ({ children }) => {
       <div
         ref={ref}
         onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
         style={{
           position: 'relative',
           height: '100%',

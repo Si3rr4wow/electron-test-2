@@ -4,6 +4,8 @@ import DraggableArea from './components/DraggableArea'
 import Draggable from './components/Draggable'
 import Droppable from './components/Droppable'
 
+import Lightbulb from './components/Lightbulb'
+
 const App: React.FC<{}> = () => {
   return (
     <div style={{ display: 'grid', height: '100%' }}>
@@ -69,14 +71,18 @@ const App: React.FC<{}> = () => {
 
           <Draggable id={'dra_1'} initialPosition={{ x: 0, y: 0 }}>
             <div style={{
-              display: 'grid',
               height: '100px',
               width: '100px',
-              background: '#8082c7'
             }}>
-              <div className="m-auto">
-                dra_1
-              </div>
+              <Lightbulb voltage={9} current={3} powerRating={30} tolerance={[3, 10]}/>
+            </div>
+          </Draggable>
+          <Draggable id={'dra_2'} initialPosition={{ x: 100, y: 0 }}>
+            <div style={{
+              height: '100px',
+              width: '100px',
+            }}>
+              <Lightbulb voltage={3} current={3} powerRating={30} tolerance={[3, 10]}/>
             </div>
           </Draggable>
       </DraggableArea>

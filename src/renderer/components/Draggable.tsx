@@ -105,7 +105,7 @@ const Draggable: React.FC<{
     <div
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      onMouseOut={handleMouseOut}
+      onMouseLeave={handleMouseOut}
       ref={ref}
       style={{
         position: 'absolute',

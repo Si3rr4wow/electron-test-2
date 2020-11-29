@@ -19,7 +19,20 @@ const isInsideHeight = (draggableContext: IDraggableAreaContext, boundingRect: {
   )
 }
 
-const Draggable: React.FC<{ id: string, initialPosition: ICoordinate, disabled?: Boolean }> = ({ id, initialPosition, disabled, children }) => {
+let delayTimout: NodeJS.Timeout;
+
+const Draggable: React.FC<{
+  id: string,
+  initialPosition: ICoordinate,
+  disabled?: Boolean,
+  delay?: number
+}> = ({
+  id,
+  initialPosition,
+  disabled,
+  delay = 0,
+  children
+}) => {
   const draggableContext = useContext(DraggableAreaContext)
   const isDragTarget = draggableContext.dragTarget === id
   const draggable = draggableContext.draggables?.[id]
@@ -66,12 +79,19 @@ const Draggable: React.FC<{ id: string, initialPosition: ICoordinate, disabled?:
 
   const handleMouseDown = () => {
     if(disabled) { return }
-    draggableContext.onDragTargetChange(id)
+    delayTimout = setTimeout(() => {
+      draggableContext.onDragTargetChange(id)
+    }, delay)
   }
 
   const handleMouseUp = () => {
     if(disabled) { return }
+    clearTimeout(delayTimout)
     draggableContext.onDragTargetChange(null)
+  }
+
+  const handleMouseOut = () => {
+    clearTimeout(delayTimout)
   }
 
   const { x, y } = (() => {
@@ -85,6 +105,7 @@ const Draggable: React.FC<{ id: string, initialPosition: ICoordinate, disabled?:
     <div
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
+      onMouseOut={handleMouseOut}
       ref={ref}
       style={{
         position: 'absolute',

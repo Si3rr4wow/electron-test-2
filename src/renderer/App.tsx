@@ -6,11 +6,15 @@ import Droppable from './components/Droppable'
 
 import Lightbulb from './components/Lightbulb'
 
+import AnimatedSvg from './components/AnimatedSvg'
+
+import switchFrames from './svgs/switch/frames'
+
 const App: React.FC<{}> = () => {
   return (
     <div style={{ display: 'grid', height: '100%' }}>
       <div className="m-auto" style={{ height: '90%', width: '90%' }}>
-      <DraggableArea>
+        <DraggableArea>
           {
             (new Array(36).fill(0)).map((_, id) => {
               return (
@@ -85,7 +89,24 @@ const App: React.FC<{}> = () => {
               <Lightbulb voltage={3} current={3} powerRating={30} tolerance={[3, 10]}/>
             </div>
           </Draggable>
-      </DraggableArea>
+
+          <Draggable id={'dra_3'} initialPosition={{ x: 200, y: 0 }}>
+            <div style={{
+              height: '100px',
+              width: '100px',
+            }}>
+              <AnimatedSvg fps={12} frames={switchFrames} isPlaying={true}/>
+            </div>
+          </Draggable>
+          <Draggable id={'dra_4'} initialPosition={{ x: 300, y: 0 }} delay={400}>
+            <div style={{
+              height: '100px',
+              width: '100px',
+            }}>
+              <AnimatedSvg fps={12} frames={switchFrames} isPlaying={false} direction={'backward'}/>
+            </div>
+          </Draggable>
+        </DraggableArea>
       </div>
     </div>
   )
